@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<Group xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.willherofinal.WillHeroGameController">
+   <children>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <ImageView fitHeight="480.0" fitWidth="854.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@static/background.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="root" opacity="0.4" prefHeight="200.0" prefWidth="200.0" />
+      <AnchorPane prefHeight="480.0" prefWidth="854.0">
+         <children>
+            <ImageView fitHeight="296.0" fitWidth="281.0" layoutX="287.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@static/logo.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="playButton" fitHeight="83.0" fitWidth="77.0" layoutX="389.0" layoutY="309.0" onMouseClicked="#startGame" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@static/startButton.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="helmetChoose" fitHeight="88.0" fitWidth="77.0" layoutX="249.0" layoutY="309.0" onMouseClicked="#chooseHelmet" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@static/chooseHelmet.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="highScore" fitHeight="75.0" fitWidth="77.0" layoutX="530.0" layoutY="309.0" onMouseClicked="#viewHighScore" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@static/viewHighScore.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </children>
+</Group>

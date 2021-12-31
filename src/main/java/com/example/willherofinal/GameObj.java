@@ -11,11 +11,14 @@ abstract class GameObj {
     private double x;
     private double y;
     private String imageAddr;
+    private ImageView img;
+    private Coordinates coordinates;
 
     public GameObj(int id, double x, double y, String imageAddr) {
         setId(id);
         setX(x);
         setY(y);
+        coordinates = new Coordinates(x, y);
         setImageAddr(imageAddr);
     }
 
@@ -29,35 +32,41 @@ abstract class GameObj {
     public double getY() { return this.y; }
     public String getImageAddr() { return this.imageAddr; }
 
+    public void moveAhead(double moveBy) {
+        this.x += moveBy;
+    }
+
     public ImageView getImage() throws FileNotFoundException {
-
-        FileInputStream inputStream = new FileInputStream(getImageAddr());
-        Image image = new Image(inputStream);
-        ImageView obj = new ImageView();
-        obj.setImage(image);
-
-        return obj;
+        if (img == null) {
+            FileInputStream inputStream = new FileInputStream(getImageAddr());
+            Image image = new Image(inputStream);
+            ImageView img = new ImageView();
+            img.setImage(image);
+        }
+        return img;
     }
 }
 
 class Island extends GameObj {
+    private ImageView islandImage;
+
     public Island(int id, double x, double y, String imageAddr) {
         super(id, x, y, imageAddr);
     }
 
     @Override
     public ImageView getImage() throws FileNotFoundException {
-
-        FileInputStream inputStream = new FileInputStream(getImageAddr());
-        Image image = new Image(inputStream);
-        ImageView obj = new ImageView();
-        obj.setImage(image);
-        obj.setX(getX());
-        obj.setY(getY());
-        obj.setFitHeight(115);
-        obj.setPreserveRatio(true);
-
-        return obj;
+        if (islandImage == null) {
+            FileInputStream inputStream = new FileInputStream(getImageAddr());
+            Image image = new Image(inputStream);
+            islandImage = new ImageView();
+            islandImage.setImage(image);
+            islandImage.setX(getX());
+            islandImage.setY(getY());
+            islandImage.setFitHeight(115);
+            islandImage.setPreserveRatio(true);
+        }
+        return islandImage;
     }
 }
 

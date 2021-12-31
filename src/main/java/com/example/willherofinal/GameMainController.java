@@ -1,6 +1,7 @@
 package com.example.willherofinal;
 
-import javafx.animation.TranslateTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
@@ -21,14 +22,18 @@ public class GameMainController implements Initializable {
     Group obstacles = new Group();
     Group heroGroup = new Group();
     public static ArrayList<GameObj> obstaclesList = new ArrayList<GameObj>();
-    TranslateTransition moveAhead = new TranslateTransition();
+    Timeline moveObstacles;
+    private final double x_move = -10;
+
+    Hero hero;
 
     @FXML
     private AnchorPane gamePane;
 
     @FXML
-    void makeMove(MouseEvent event) {
-        moveAhead.play();
+    void makeMove(MouseEvent event) throws FileNotFoundException {
+        moveObstacles.play();
+        hero.jump(obstaclesList);
     }
 
     @Override
@@ -44,7 +49,6 @@ public class GameMainController implements Initializable {
                 int id = Integer.parseInt(row[0]);
                 float x = Float.parseFloat(row[1]);
                 float y = Float.parseFloat(row[2]);
-                System.out.println("ID: " + id + " X: " + x + " Y: " + y);
                 GameObj tempObj = ObstaclesGenerator.generateObstacle(id, x, y);
                 obstaclesList.add(tempObj);
             }
@@ -68,7 +72,9 @@ public class GameMainController implements Initializable {
         }
 
         String defaultHeroHelmet = "src/main/java/com/example/willherofinal/img/Helmet3.png";
-        Hero hero = new Hero(1, 150, 210, defaultHeroHelmet);
+        hero = new Hero(1, 150, 150, defaultHeroHelmet);
+        hero.jump(obstaclesList);
+
         try {
             heroGroup.getChildren().add(hero.getImage());
         } catch (FileNotFoundException e) {
@@ -78,16 +84,20 @@ public class GameMainController implements Initializable {
         gamePane.getChildren().add(heroGroup);
         gamePane.getChildren().add(obstacles);
 
-        TranslateTransition translate = new TranslateTransition();
-        translate.setNode(heroGroup);
-        translate.setDuration(Duration.millis(700));
-        translate.setByY(-150);
-        translate.setCycleCount(TranslateTransition.INDEFINITE);
-        translate.setAutoReverse(true);
-        translate.play();
+        moveObstacles = new Timeline(new KeyFrame(Duration.millis(10) , e -> {
+            try {
+                moveScene(obstaclesList);
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            }
+        }));
+        moveObstacles.setCycleCount(40);
 
-        moveAhead.setNode(obstacles);
-        moveAhead.setByX(-300);
+    }
 
+    private void moveScene(ArrayList<GameObj> obstaclesList) throws FileNotFoundException {
+        for (GameObj obstacle : obstaclesList) {
+            obstacle.getImage().setLayoutX(obstacle.getImage().getLayoutX() + x_move);
+        }
     }
 }

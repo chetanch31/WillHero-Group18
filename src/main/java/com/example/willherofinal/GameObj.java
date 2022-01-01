@@ -71,6 +71,30 @@ class Island extends GameObj {
     }
 }
 
+class Coins extends GameObj {
+
+    private ImageView coinImage;
+
+    public Coins(int id, double x, double y, String imageAddr) {
+        super(id, x, y, imageAddr);
+    }
+
+    @Override
+    public ImageView getImage() throws FileNotFoundException {
+        if (coinImage == null) {
+            FileInputStream inputStream = new FileInputStream(getImageAddr());
+            Image image = new Image(inputStream);
+            coinImage = new ImageView();
+            coinImage.setImage(image);
+            coinImage.setX(getX());
+            coinImage.setY(getY());
+            coinImage.setFitHeight(25);
+            coinImage.setPreserveRatio(true);
+        }
+        return coinImage;
+    }
+}
+
 class Tree extends GameObj {
 
     public Tree(int id, double x, double y, String imageAddr) {

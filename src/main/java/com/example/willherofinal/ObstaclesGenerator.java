@@ -39,6 +39,10 @@ public class ObstaclesGenerator {
             //bossOrc
             String imgAddr = "src/main/java/com/example/willherofinal/img/OrcBoss.png";
 
+        } else if ( id == 8 ) {
+            //coins
+            String imgAddr = "src/main/java/com/example/willherofinal/img/Coin.png";
+            return new Coins(id, x, y, imgAddr);
         }
         return  obj;
     }

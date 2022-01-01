@@ -2,7 +2,6 @@ package com.example.willherofinal;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
@@ -69,6 +68,11 @@ public class Hero extends GameObj{
         if (isColliding(gameObjs)) {
             y_speed = -max_jump;
         }
+
+        if (heroImage.getBoundsInParent().getMinY() > 440 ) {
+            System.out.println("Game over!");
+            heroJumpingTimeline.pause();
+        }
     }
 
     private int typeOfCollision(Orcs obj) throws FileNotFoundException {
@@ -106,6 +110,7 @@ public class Hero extends GameObj{
                 if (obj.getImage().getBoundsInParent().intersects(getImage().getBoundsInParent())) {
                     int collisionType = typeOfCollision((Orcs) obj);
                     if ( collisionType == 0 ) {
+                        GameMainController.pushBack(gameObjs, 2);
                         ((Orcs) obj).pushOrc(gameObjs);
                         return false;
                     } else if ( collisionType == 1 ) {
@@ -113,6 +118,15 @@ public class Hero extends GameObj{
                     } else {
                         return true;
                     }
+                }
+            } else if ( obj.getId() == 8 ) {
+                //if hero collides with any coint
+                if (obj.getImage().getBoundsInParent().intersects(getImage().getBoundsInParent())) {
+                    GameMainController.numberOfCoins += 1;
+                    GameMainController.updateCoins();
+                    obj.getImage().setImage(null);
+                    gameObjs.remove(obj);
+                    return false;
                 }
             }
         }

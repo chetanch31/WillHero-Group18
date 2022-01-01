@@ -5,6 +5,7 @@ import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
@@ -21,9 +22,13 @@ public class GameMainController implements Initializable {
 
     Group obstacles = new Group();
     Group heroGroup = new Group();
+    Group coinsGroup = new Group();
     public static ArrayList<GameObj> obstaclesList = new ArrayList<GameObj>();
     Timeline moveObstacles;
     private final double x_move = -7;
+    public static int numberOfCoins = 130;
+    private static Label coinsLabel;
+
 
     Hero hero;
 
@@ -75,6 +80,14 @@ public class GameMainController implements Initializable {
         hero = new Hero(1, 150, 150, defaultHeroHelmet);
         hero.jump(obstaclesList);
 
+        coinsLabel = new Label();
+        coinsLabel.setText(String.valueOf(numberOfCoins));
+        coinsLabel.setLayoutX(750);
+        coinsLabel.setLayoutY(20);
+
+        coinsGroup.getChildren().add(coinsLabel);
+        gamePane.getChildren().add(coinsGroup);
+
         try {
             heroGroup.getChildren().add(hero.getImage());
         } catch (FileNotFoundException e) {
@@ -86,22 +99,13 @@ public class GameMainController implements Initializable {
 
         for (GameObj obj : obstaclesList) {
             if (obj.getId() == 5 | obj.getId() == 6) {
-                try {
-                    System.out.println(obj.getImage().getBoundsInParent());
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
                 ((Orcs)obj).jump(obstaclesList);
-                try {
-                    System.out.println(obj.getImage().getBoundsInParent());
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
             }
         }
+
         moveObstacles = new Timeline(new KeyFrame(Duration.millis(10) , e -> {
             try {
-                moveScene(obstaclesList);
+                moveScene(obstaclesList, x_move);
             } catch (FileNotFoundException ex) {
                 ex.printStackTrace();
             }
@@ -110,9 +114,26 @@ public class GameMainController implements Initializable {
 
     }
 
-    private void moveScene(ArrayList<GameObj> obstaclesList) throws FileNotFoundException {
+    public static void pushBack(ArrayList<GameObj> gameObjs, double move_x) {
+        Timeline push = new Timeline(new KeyFrame(Duration.millis(10), e -> {
+            try {
+                moveScene(gameObjs, move_x);
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            }
+        }));
+
+        push.setCycleCount(20);
+        push.play();
+    }
+
+    public static void updateCoins() {
+        coinsLabel.setText(String.valueOf(numberOfCoins));
+    }
+
+    private static void moveScene(ArrayList<GameObj> obstaclesList, double move_x) throws FileNotFoundException {
         for (GameObj obstacle : obstaclesList) {
-            obstacle.getImage().setLayoutX(obstacle.getImage().getLayoutX() + x_move);
+            obstacle.getImage().setLayoutX(obstacle.getImage().getLayoutX() + move_x);
         }
     }
 }

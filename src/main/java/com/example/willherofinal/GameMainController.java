@@ -2,18 +2,20 @@ package com.example.willherofinal;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -23,12 +25,13 @@ public class GameMainController implements Initializable {
     Group obstacles = new Group();
     Group heroGroup = new Group();
     Group coinsGroup = new Group();
+    Group buttonsGroup = new Group();
     public static ArrayList<GameObj> obstaclesList = new ArrayList<GameObj>();
     Timeline moveObstacles;
     private final double x_move = -7;
     public static int numberOfCoins = 130;
     private static Label coinsLabel;
-
+    private ImageView settingsButton;
 
     Hero hero;
 
@@ -76,13 +79,35 @@ public class GameMainController implements Initializable {
             }
         }
 
+        if (settingsButton == null) {
+            try {
+                settingsButton = new ImageView();
+                settingsButton.setImage(new Image(new FileInputStream("src/main/java/com/example/willherofinal/img/settings.png")));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            settingsButton.setFitHeight(50);
+            settingsButton.setPreserveRatio(true);
+            settingsButton.setLayoutX(780);
+            settingsButton.setLayoutY(10);
+        }
+        settingsButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                System.out.println("Clicked settings!");
+            }
+        });
+
+        buttonsGroup.getChildren().add(settingsButton);
+        gamePane.getChildren().add(buttonsGroup);
+
         String defaultHeroHelmet = "src/main/java/com/example/willherofinal/img/Helmet3.png";
         hero = new Hero(1, 150, 150, defaultHeroHelmet);
         hero.jump(obstaclesList);
 
         coinsLabel = new Label();
         coinsLabel.setText(String.valueOf(numberOfCoins));
-        coinsLabel.setLayoutX(750);
+        coinsLabel.setLayoutX(70);
         coinsLabel.setLayoutY(20);
 
         coinsGroup.getChildren().add(coinsLabel);
@@ -136,4 +161,5 @@ public class GameMainController implements Initializable {
             obstacle.getImage().setLayoutX(obstacle.getImage().getLayoutX() + move_x);
         }
     }
+
 }

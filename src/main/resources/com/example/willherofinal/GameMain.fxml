@@ -14,7 +14,7 @@
                   <Image url="@static/background.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="58.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true" x="700.0" y="10.0">
+            <ImageView fitHeight="58.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true" x="20.0" y="10.0">
                <image>
                   <Image url="@static/Coin.png" />
                </image>

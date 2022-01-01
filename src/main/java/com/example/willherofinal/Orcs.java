@@ -13,10 +13,10 @@ import java.util.ArrayList;
 public class Orcs extends GameObj{
     private ImageView orcImage;
     private Timeline orcJumpingTimeline;
+    private Timeline orcPushTimeline;
     private double x_speed, y_speed;
     private double gravity;
     private double max_jump;
-
 
     public Orcs(int id, double x, double y, String imageAddr) {
         super(id, x, y, imageAddr);
@@ -28,6 +28,8 @@ public class Orcs extends GameObj{
             this.gravity = 0.3;
             this.max_jump = 8;
         }
+
+        x_speed = 2;
     }
 
     @Override
@@ -43,6 +45,19 @@ public class Orcs extends GameObj{
             orcImage.setPreserveRatio(true);
         }
         return orcImage;
+    }
+
+    public void pushOrc(ArrayList<GameObj> gameObjs) {
+        if (orcPushTimeline == null) {
+            orcPushTimeline = new Timeline(new KeyFrame(Duration.millis(2), e-> makeHeroPush(gameObjs)));
+        }
+
+        orcPushTimeline.setCycleCount(200);
+        orcPushTimeline.play();
+    }
+
+    private void makeHeroPush(ArrayList<GameObj> gameObjs) {
+        orcImage.setLayoutX(orcImage.getLayoutX() + x_speed);
     }
 
     public void jump(ArrayList<GameObj> gameObjs) {

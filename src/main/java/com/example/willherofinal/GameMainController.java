@@ -23,7 +23,7 @@ public class GameMainController implements Initializable {
     Group heroGroup = new Group();
     public static ArrayList<GameObj> obstaclesList = new ArrayList<GameObj>();
     Timeline moveObstacles;
-    private final double x_move = -10;
+    private final double x_move = -7;
 
     Hero hero;
 
@@ -86,7 +86,17 @@ public class GameMainController implements Initializable {
 
         for (GameObj obj : obstaclesList) {
             if (obj.getId() == 5 | obj.getId() == 6) {
+                try {
+                    System.out.println(obj.getImage().getBoundsInParent());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
                 ((Orcs)obj).jump(obstaclesList);
+                try {
+                    System.out.println(obj.getImage().getBoundsInParent());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         }
         moveObstacles = new Timeline(new KeyFrame(Duration.millis(10) , e -> {

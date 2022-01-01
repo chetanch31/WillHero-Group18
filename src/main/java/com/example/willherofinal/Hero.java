@@ -2,6 +2,7 @@ package com.example.willherofinal;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
@@ -70,11 +71,48 @@ public class Hero extends GameObj{
         }
     }
 
+    private int typeOfCollision(Orcs obj) throws FileNotFoundException {
+        double heroXStart = getImage().getBoundsInParent().getMinX();
+        double heroXEnd = heroXStart + getImage().getFitWidth();
+
+        double orcXStart = obj.getImage().getBoundsInParent().getMinX();
+        double orcxEnd = orcXStart + obj.getImage().getFitWidth();
+
+        double heroYStart = getImage().getBoundsInParent().getMinY();
+        double heroYEnd = heroYStart + getImage().getFitHeight();
+
+        double orcYStart = obj.getImage().getBoundsInParent().getMinY();
+        double orcYEnd = orcYStart + obj.getImage().getFitHeight();
+
+        double xOverlap = Math.min(heroXEnd - orcXStart, orcxEnd - heroXStart);
+        double yOverlap = Math.min(heroYEnd - orcYStart, orcYEnd - heroYStart);
+
+        if (yOverlap > xOverlap) { return 0; }
+
+        if (heroYStart < orcYStart) { return 1; }
+
+        return -1;
+    }
+
     private boolean isColliding(ArrayList<GameObj> gameObjs) throws FileNotFoundException {
         for (GameObj obj : gameObjs) {
             if (obj.getId() == 1 | obj.getId() == 2 | obj.getId() == 3 | obj.getId() == 4) {
+                //if hero collides with any island
                 if (obj.getImage().getBoundsInParent().intersects(getImage().getBoundsInParent())) {
                     return true;
+                }
+            } else if (obj.getId() == 5 | obj.getId() == 6) {
+                //if hero collides with any orc
+                if (obj.getImage().getBoundsInParent().intersects(getImage().getBoundsInParent())) {
+                    int collisionType = typeOfCollision((Orcs) obj);
+                    if ( collisionType == 0 ) {
+                        ((Orcs) obj).pushOrc(gameObjs);
+                        return false;
+                    } else if ( collisionType == 1 ) {
+                        System.out.println("Crushed");
+                    } else {
+                        return true;
+                    }
                 }
             }
         }

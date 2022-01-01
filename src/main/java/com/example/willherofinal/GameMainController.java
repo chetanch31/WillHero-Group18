@@ -84,6 +84,11 @@ public class GameMainController implements Initializable {
         gamePane.getChildren().add(heroGroup);
         gamePane.getChildren().add(obstacles);
 
+        for (GameObj obj : obstaclesList) {
+            if (obj.getId() == 5 | obj.getId() == 6) {
+                ((Orcs)obj).jump(obstaclesList);
+            }
+        }
         moveObstacles = new Timeline(new KeyFrame(Duration.millis(10) , e -> {
             try {
                 moveScene(obstaclesList);

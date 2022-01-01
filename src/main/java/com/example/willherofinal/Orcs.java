@@ -10,59 +10,60 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-public class Hero extends GameObj{
-
-    private double jump;
+public class Orcs extends GameObj{
+    private ImageView orcImage;
+    private Timeline orcJumpingTimeline;
     private double x_speed, y_speed;
-    private static final double GRAVITY = 0.5;
-    private static final double max_jump = 10;
-    private Timeline heroJumpingTimeline;
-    private ImageView heroImage;
+    private double gravity;
+    private double max_jump;
 
-    public Hero(int id, double x, double y, String imgAddr) {
 
-        super(id, x, y, imgAddr);
+    public Orcs(int id, double x, double y, String imageAddr) {
+        super(id, x, y, imageAddr);
+
+        if (id == 5) {
+            this.gravity = 0.5;
+            this.max_jump = 10;
+        } else if (id == 6) {
+            this.gravity = 0.3;
+            this.max_jump = 8;
+        }
     }
-
-    private void setJump(double jump) { this.jump = jump; }
-
-    public double getJump() { return this.jump; }
 
     @Override
     public ImageView getImage() throws FileNotFoundException {
-        if (heroImage == null) {
+        if (orcImage == null) {
             FileInputStream inputStream = new FileInputStream(getImageAddr());
             Image image = new Image(inputStream);
-            heroImage = new ImageView();
-            heroImage.setImage(image);
-            heroImage.setX(getX());
-            heroImage.setY(getY());
-            heroImage.setFitHeight(45);
-            heroImage.setPreserveRatio(true);
+            orcImage = new ImageView();
+            orcImage.setImage(image);
+            orcImage.setX(getX());
+            orcImage.setY(getY());
+            orcImage.setFitHeight(40);
+            orcImage.setPreserveRatio(true);
         }
-
-        return heroImage;
+        return orcImage;
     }
 
     public void jump(ArrayList<GameObj> gameObjs) {
-        if (heroJumpingTimeline == null) {
-            heroJumpingTimeline = new Timeline(new KeyFrame(Duration.millis(24), e -> {
+        if (orcJumpingTimeline == null) {
+            orcJumpingTimeline = new Timeline(new KeyFrame(Duration.millis(24), e -> {
                 try {
                     makeHeroJump(gameObjs);
                 } catch (FileNotFoundException ex) {
                     ex.printStackTrace();
                 }
             }));
-            heroJumpingTimeline.setCycleCount(Timeline.INDEFINITE);
+            orcJumpingTimeline.setCycleCount(Timeline.INDEFINITE);
         }
 
         //Plays the jumping animation
-        heroJumpingTimeline.play();
+        orcJumpingTimeline.play();
     }
 
     private void makeHeroJump(ArrayList<GameObj> gameObjs) throws FileNotFoundException {
-        heroImage.setLayoutY(heroImage.getLayoutY() + y_speed);
-        y_speed += GRAVITY;
+        orcImage.setLayoutY(orcImage.getLayoutY() + y_speed);
+        y_speed += gravity;
 
         //function reverses motion if hero collides
         if (isColliding(gameObjs)) {
@@ -79,5 +80,19 @@ public class Hero extends GameObj{
             }
         }
         return false;
+    }
+}
+
+class GreenOrc extends Orcs {
+
+    public GreenOrc(int id, double x, double y, String imageAddr) {
+        super(id, x, y, imageAddr);
+    }
+}
+
+class RedOrc extends Orcs {
+
+    public RedOrc(int id, double x, double y, String imageAddr) {
+        super(id, x, y, imageAddr);
     }
 }

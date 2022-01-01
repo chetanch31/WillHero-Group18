@@ -28,10 +28,12 @@ public class ObstaclesGenerator {
         } else if ( id == 5 ) {
             //GreenOrc
             String imgAddr = "src/main/java/com/example/willherofinal/img/Orc2.png";
+            return new GreenOrc(id, x, y, imgAddr);
 
         } else if ( id == 6 ) {
             //RedOrc
             String imgAddr = "src/main/java/com/example/willherofinal/img/RedOrc1.png";
+            return new RedOrc(id, x, y, imgAddr);
 
         } else if ( id == 7 ) {
             //bossOrc

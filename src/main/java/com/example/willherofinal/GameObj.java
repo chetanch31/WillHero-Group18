@@ -1,5 +1,6 @@
 package com.example.willherofinal;
 
+import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 

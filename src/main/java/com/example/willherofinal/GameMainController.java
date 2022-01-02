@@ -25,6 +25,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 public class GameMainController implements Initializable {
 
@@ -66,6 +67,35 @@ public class GameMainController implements Initializable {
         moveUp.setDuration(Duration.millis(100));
         moveUp.setNode(pauseMenuPane);
         moveUp.play();
+    }
+
+    public static void playGameOver() throws InterruptedException, IOException {
+        TimeUnit.SECONDS.sleep(1);
+        Group parent = FXMLLoader.load(Objects.requireNonNull(GameMainController.class.getResource("GameOver.fxml")));
+        Scene scene = new Scene(parent, 854, 480);
+        WillHeroGame.mainStage.setScene(scene);
+        WillHeroGame.mainStage.show();
+    }
+
+    public static int collisionType(ImageView first, ImageView second) throws FileNotFoundException {
+
+        float wy = (float) ((first.getBoundsInParent().getWidth() + second.getBoundsInParent().getWidth()) * (first.getBoundsInParent().getCenterY() - second.getBoundsInParent().getCenterY()));
+        float hx = (float) ((first.getBoundsInParent().getHeight() + second.getBoundsInParent().getHeight()) * (first.getBoundsInParent().getCenterX() - second.getBoundsInParent().getCenterX()));
+
+        if (wy > hx) {
+            if (wy > -hx) {
+                return 0; //bottom
+            }
+            else {
+                return -1; //left
+            }
+        }
+        else  {
+            if (wy > -hx) {
+                return 1; //right
+            }
+        }
+        return 2; //top
     }
 
     @Override

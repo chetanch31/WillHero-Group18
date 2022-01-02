@@ -90,7 +90,9 @@ public class Orcs extends GameObj{
         for (GameObj obj : gameObjs) {
             if (obj.getId() == 1 | obj.getId() == 2 | obj.getId() == 3 | obj.getId() == 4) {
                 if (obj.getImage().getBoundsInParent().intersects(getImage().getBoundsInParent())) {
-                    return true;
+                    if (GameMainController.collisionType(getImage(), obj.getImage()) == 2) {
+                        return true;
+                    }
                 }
             }
         }

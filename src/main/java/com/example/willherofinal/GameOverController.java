@@ -7,6 +7,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -33,8 +34,10 @@ public class GameOverController implements Initializable {
     }
 
     @FXML
-    void resurrectHero(MouseEvent event) {
-
+    void resurrectHero(MouseEvent event) throws FileNotFoundException {
+        for (GameObj gameObj : GameMainController.obstaclesList) {
+            System.out.println(gameObj.getImage().getBoundsInParent());
+        }
     }
 
     @FXML

@@ -69,7 +69,6 @@ class Knife extends Weapon implements Initializable {
         knifeImage.setLayoutX(knifeImage.getLayoutX() + 1);
 
         if (isCollidingOrc(obstacles)) {
-            System.out.println("Killed orc!");
         }
     }
 

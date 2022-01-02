@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class Orcs extends GameObj{
     private ImageView orcImage;
-    private static Timeline orcJumpingTimeline;
+    private Timeline orcJumpingTimeline;
     private Timeline orcPushTimeline;
     private double x_speed, y_speed;
     private double gravity;

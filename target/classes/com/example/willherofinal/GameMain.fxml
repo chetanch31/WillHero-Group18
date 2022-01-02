@@ -22,5 +22,6 @@
          </children>
       </AnchorPane>
       <AnchorPane fx:id="gamePane" onMouseClicked="#makeMove" prefHeight="480.0" prefWidth="854.0" />
+      <AnchorPane fx:id="settingsButton" layoutX="770.0" layoutY="10.0" onMouseClicked="#settingsButtonClick" prefHeight="77.0" prefWidth="77.0" />
    </children>
 </Group>

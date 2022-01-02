@@ -25,13 +25,11 @@ public class GameMainController implements Initializable {
     Group obstacles = new Group();
     Group heroGroup = new Group();
     Group coinsGroup = new Group();
-    Group buttonsGroup = new Group();
     public static ArrayList<GameObj> obstaclesList = new ArrayList<GameObj>();
     Timeline moveObstacles;
     private final double x_move = -7;
     public static int numberOfCoins = 130;
     private static Label coinsLabel;
-    private ImageView settingsButton;
 
     Hero hero;
 
@@ -39,9 +37,17 @@ public class GameMainController implements Initializable {
     private AnchorPane gamePane;
 
     @FXML
+    private AnchorPane settingsButton;
+
+    @FXML
     void makeMove(MouseEvent event) throws FileNotFoundException {
         moveObstacles.play();
         hero.jump(obstaclesList);
+    }
+
+    @FXML
+    void settingsButtonClick(MouseEvent event) {
+        System.out.println("Clicked on settings");
     }
 
     @Override
@@ -79,27 +85,15 @@ public class GameMainController implements Initializable {
             }
         }
 
-        if (settingsButton == null) {
-            try {
-                settingsButton = new ImageView();
-                settingsButton.setImage(new Image(new FileInputStream("src/main/java/com/example/willherofinal/img/settings.png")));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            settingsButton.setFitHeight(50);
-            settingsButton.setPreserveRatio(true);
-            settingsButton.setLayoutX(780);
-            settingsButton.setLayoutY(10);
+        ImageView settingsButtonImage = new ImageView();
+        try {
+            settingsButtonImage.setImage(new Image(new FileInputStream("src/main/java/com/example/willherofinal/img/settings.png")));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-        settingsButton.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                System.out.println("Clicked settings!");
-            }
-        });
-
-        buttonsGroup.getChildren().add(settingsButton);
-        gamePane.getChildren().add(buttonsGroup);
+        settingsButtonImage.setFitHeight(60);
+        settingsButtonImage.setPreserveRatio(true);
+        settingsButton.getChildren().add(settingsButtonImage);
 
         String defaultHeroHelmet = "src/main/java/com/example/willherofinal/img/Helmet3.png";
         hero = new Hero(1, 150, 150, defaultHeroHelmet);

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<Group xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.willherofinal.GameOverController">
+   <children>
+      <AnchorPane prefHeight="480.0" prefWidth="854.0">
+         <children>
+            <ImageView fitHeight="480.0" fitWidth="854.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@static/background.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="480.0" prefWidth="854.0">
+         <children>
+            <ImageView fitHeight="421.0" fitWidth="631.0" layoutX="111.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@static/gameOver.png" />
+               </image>
+            </ImageView>
+            <ProgressBar fx:id="heroProgressBar" layoutX="212.0" layoutY="185.0" prefHeight="39.0" prefWidth="429.0" progress="0.0" />
+            <ImageView fitHeight="71.0" fitWidth="55.0" layoutX="133.0" layoutY="153.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@static/Helmet3.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="71.0" fitWidth="73.0" layoutX="663.0" layoutY="153.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@static/OrcBoss.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="goHome" fitHeight="107.0" fitWidth="108.0" layoutX="187.0" layoutY="288.0" onMouseClicked="#returnHome" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@static/return.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="restartGame" fitHeight="107.0" fitWidth="108.0" layoutX="555.0" layoutY="287.0" onMouseClicked="#restartGame" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@static/restart.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="resurrect" fitHeight="150.0" fitWidth="200.0" layoutX="327.0" layoutY="258.0" onMouseClicked="#resurrectHero" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@static/regen.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="39.0" fitWidth="38.0" layoutX="428.0" layoutY="321.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@static/Coin.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="textField" layoutX="249.0" layoutY="145.0" prefHeight="29.0" prefWidth="357.0" text="You were almost there!" textFill="WHITE">
+               <font>
+                  <Font name="Gill Sans Ultra Bold" size="22.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</Group>

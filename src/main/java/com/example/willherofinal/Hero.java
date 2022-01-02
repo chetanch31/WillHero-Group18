@@ -2,13 +2,21 @@ package com.example.willherofinal;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class Hero extends GameObj{
 
@@ -18,10 +26,12 @@ public class Hero extends GameObj{
     private static final double max_jump = 10;
     private Timeline heroJumpingTimeline;
     private ImageView heroImage;
+    private double distanceMoved;
 
     public Hero(int id, double x, double y, String imgAddr) {
 
         super(id, x, y, imgAddr);
+        distanceMoved = x;
     }
 
     private void setJump(double jump) { this.jump = jump; }
@@ -49,7 +59,7 @@ public class Hero extends GameObj{
             heroJumpingTimeline = new Timeline(new KeyFrame(Duration.millis(24), e -> {
                 try {
                     makeHeroJump(gameObjs);
-                } catch (FileNotFoundException ex) {
+                } catch (IOException | InterruptedException ex) {
                     ex.printStackTrace();
                 }
             }));
@@ -60,7 +70,7 @@ public class Hero extends GameObj{
         heroJumpingTimeline.play();
     }
 
-    private void makeHeroJump(ArrayList<GameObj> gameObjs) throws FileNotFoundException {
+    private void makeHeroJump(ArrayList<GameObj> gameObjs) throws IOException, InterruptedException {
         heroImage.setLayoutY(heroImage.getLayoutY() + y_speed);
         y_speed += GRAVITY;
 
@@ -70,8 +80,12 @@ public class Hero extends GameObj{
         }
 
         if (heroImage.getBoundsInParent().getMinY() > 440 ) {
-            System.out.println("Game over!");
             heroJumpingTimeline.pause();
+            TimeUnit.SECONDS.sleep(1);
+            Group parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("GameOver.fxml")));
+            Scene scene = new Scene(parent, 854, 480);
+            WillHeroGame.mainStage.setScene(scene);
+            WillHeroGame.mainStage.show();
         }
     }
 
@@ -131,5 +145,13 @@ public class Hero extends GameObj{
             }
         }
         return false;
+    }
+
+    public void setDistanceMoved(double movedBy) {
+        distanceMoved += movedBy;
+    }
+
+    public double getDistanceMoved() {
+        return distanceMoved;
     }
 }

@@ -21,6 +21,8 @@ public class Hero extends GameObj{
     private Timeline heroJumpingTimeline;
     private ImageView heroImage;
     private double distanceMoved;
+    private boolean knifeEquipped;
+    private boolean shurikenEquipped;
 
     public Hero(int id, double x, double y, String imgAddr) {
 
@@ -31,6 +33,14 @@ public class Hero extends GameObj{
     private void setJump(double jump) { this.jump = jump; }
 
     public double getJump() { return this.jump; }
+
+    public boolean isKnifeEquipped() {
+        return knifeEquipped;
+    }
+
+    public boolean isShurikenEquipped() {
+        return shurikenEquipped;
+    }
 
     @Override
     public ImageView getImage() throws FileNotFoundException {
@@ -111,6 +121,29 @@ public class Hero extends GameObj{
                     GameMainController.updateCoins();
                     obj.getImage().setImage(null);
                     gameObjs.remove(obj);
+                    return false;
+                }
+            } else if (obj.getId() == 9 ) {
+                //if hero collides with chest
+                if (obj.getImage().getBoundsInParent().intersects(getImage().getBoundsInParent())) {
+                    ((TreasureChest)obj).updateImage();
+                    GameMainController.numberOfCoins += ((MoneyChest)obj).getCoins();
+                    GameMainController.updateCoins();
+                    return false;
+                }
+            } else if ( obj.getId() == 10 ) {
+                //if hero collides with knife chest
+                if (obj.getImage().getBoundsInParent().intersects(getImage().getBoundsInParent())) {
+                    ((TreasureChest)obj).updateImage();
+                    knifeEquipped = true;
+                    return false;
+                }
+            } else if ( obj.getId() == 11 ){
+                //if hero collides with shuriken
+                if (obj.getImage().getBoundsInParent().intersects(getImage().getBoundsInParent())) {
+                    ((TreasureChest)obj).updateImage();
+                    knifeEquipped = false;
+                    shurikenEquipped = true;
                     return false;
                 }
             }

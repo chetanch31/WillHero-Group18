@@ -33,6 +33,26 @@
                   <Font name="Berlin Sans FB" size="12.0" />
                </font>
             </Label>
+            <ImageView fitHeight="44.0" fitWidth="70.0" layoutX="14.0" layoutY="422.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@static/knifePopUp.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="44.0" fitWidth="63.0" layoutX="86.0" layoutY="422.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@static/shurikenPopUp.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="numberShuriken" layoutX="110.0" layoutY="410.0" text="0" textFill="WHITE">
+               <font>
+                  <Font name="Copperplate Gothic Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="numberKnifes" layoutX="38.0" layoutY="410.0" text="0" textFill="WHITE">
+               <font>
+                  <Font name="Copperplate Gothic Bold" size="20.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="settingsButton" layoutX="770.0" layoutY="10.0" onMouseClicked="#settingsButtonClick" prefHeight="77.0" prefWidth="77.0" />

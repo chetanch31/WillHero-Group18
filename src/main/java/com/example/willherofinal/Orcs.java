@@ -12,11 +12,12 @@ import java.util.ArrayList;
 
 public class Orcs extends GameObj{
     private ImageView orcImage;
-    private Timeline orcJumpingTimeline;
+    private static Timeline orcJumpingTimeline;
     private Timeline orcPushTimeline;
     private double x_speed, y_speed;
     private double gravity;
     private double max_jump;
+    private boolean alive = true;
 
     public Orcs(int id, double x, double y, String imageAddr) {
         super(id, x, y, imageAddr);
@@ -98,6 +99,7 @@ public class Orcs extends GameObj{
         }
         return false;
     }
+
 }
 
 class GreenOrc extends Orcs {

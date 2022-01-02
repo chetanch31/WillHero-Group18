@@ -43,6 +43,13 @@ public class ObstaclesGenerator {
             //coins
             String imgAddr = "src/main/java/com/example/willherofinal/img/Coin.png";
             return new Coins(id, x, y, imgAddr);
+        } else if ( id == 9 ) {
+            //treasureChest
+            String imgAddr = "src/main/java/com/example/willherofinal/img/ChestClosed.png";
+            return new MoneyChest(id, x, y, imgAddr);
+        } else if ( id == 10 ) {
+            String imgAddr = "src/main/java/com/example/willherofinal/img/ChestClosed.png";
+            return  new KnifeChest(id, x, y, imgAddr);
         }
         return  obj;
     }

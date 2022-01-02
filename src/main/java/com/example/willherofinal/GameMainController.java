@@ -32,6 +32,7 @@ public class GameMainController implements Initializable {
     static Group obstacles = new Group();
     static Group heroGroup = new Group();
     static Group coinsGroup = new Group();
+    static Group weaponsGroup = new Group();
     public static ArrayList<GameObj> obstaclesList = new ArrayList<GameObj>();
     Timeline moveObstacles;
     private final double x_move = -7;
@@ -44,18 +45,31 @@ public class GameMainController implements Initializable {
     private AnchorPane gamePane;
 
     @FXML
-    private AnchorPane settingsButton;
+    private AnchorPane pauseMenuPane;
 
     @FXML
-    private AnchorPane pauseMenuPane;
+    private Label numberKnifes;
+
+    @FXML
+    private Label numberShuriken;
 
     @FXML
     private ProgressBar progressBar;
 
     @FXML
+    private AnchorPane settingsButton;
+
+    @FXML
     void makeMove(MouseEvent event) throws FileNotFoundException {
         moveObstacles.play();
         hero.jump(obstaclesList);
+        if (hero.isKnifeEquipped()) {
+            String img = "src/main/java/com/example/willherofinal/img/WeaponKnife.png";
+            Knife throwingKnife = new Knife(10, hero.getImage().getBoundsInParent().getCenterX(), hero.getImage().getBoundsInParent().getCenterY(), img);
+            ImageView knife = throwingKnife.getImage();
+            weaponsGroup.getChildren().add(knife);
+            throwingKnife.shoot(obstaclesList);
+        }
         progressBar.setProgress(hero.getDistanceMoved()/10000);
     }
 
@@ -143,6 +157,8 @@ public class GameMainController implements Initializable {
         settingsButtonImage.setPreserveRatio(true);
         settingsButton.getChildren().add(settingsButtonImage);
 
+        gamePane.getChildren().add(weaponsGroup);
+
         try {
             createPauseMenu();
         } catch (FileNotFoundException e) {
@@ -217,6 +233,7 @@ public class GameMainController implements Initializable {
         obstacles = new Group();
         heroGroup = new Group();
         coinsGroup = new Group();
+        weaponsGroup = new Group();
         obstaclesList = new ArrayList<GameObj>();
         Group parent = null;
         try {
@@ -234,6 +251,7 @@ public class GameMainController implements Initializable {
         obstacles = new Group();
         heroGroup = new Group();
         coinsGroup = new Group();
+        obstacles = new Group();
         obstaclesList = new ArrayList<GameObj>();
         Stage stage;
         WillHeroGame game = new WillHeroGame();

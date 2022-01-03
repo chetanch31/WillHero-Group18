@@ -38,6 +38,7 @@ public class ObstaclesGenerator {
         } else if ( id == 7 ) {
             //bossOrc
             String imgAddr = "src/main/java/com/example/willherofinal/img/OrcBoss.png";
+            return new BossOrc(id, x, y, imgAddr);
 
         } else if ( id == 8 ) {
             //coins
@@ -50,7 +51,11 @@ public class ObstaclesGenerator {
         } else if ( id == 10 ) {
             String imgAddr = "src/main/java/com/example/willherofinal/img/ChestClosed.png";
             return  new KnifeChest(id, x, y, imgAddr);
+        } else if ( id == 12 ){
+            String imgAddr = "src/main/java/com/example/willherofinal/img/TNT.png";
+            return new Bomb(id, x, y, imgAddr);
         }
+
         return  obj;
     }
 }

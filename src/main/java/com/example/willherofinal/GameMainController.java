@@ -93,11 +93,11 @@ public class GameMainController implements Initializable {
 
     public static int collisionType(ImageView first, ImageView second) throws FileNotFoundException {
 
-        float wy = (float) ((first.getBoundsInParent().getWidth() + second.getBoundsInParent().getWidth()) * (first.getBoundsInParent().getCenterY() - second.getBoundsInParent().getCenterY()));
-        float hx = (float) ((first.getBoundsInParent().getHeight() + second.getBoundsInParent().getHeight()) * (first.getBoundsInParent().getCenterX() - second.getBoundsInParent().getCenterX()));
+        float a = (float) ((first.getBoundsInParent().getWidth() + second.getBoundsInParent().getWidth()) * (first.getBoundsInParent().getCenterY() - second.getBoundsInParent().getCenterY()));
+        float b = (float) ((first.getBoundsInParent().getHeight() + second.getBoundsInParent().getHeight()) * (first.getBoundsInParent().getCenterX() - second.getBoundsInParent().getCenterX()));
 
-        if (wy > hx) {
-            if (wy > -hx) {
+        if (a > b) {
+            if (a > -b) {
                 return 0; //bottom
             }
             else {
@@ -105,7 +105,7 @@ public class GameMainController implements Initializable {
             }
         }
         else  {
-            if (wy > -hx) {
+            if (a > -b) {
                 return 1; //right
             }
         }
@@ -195,7 +195,7 @@ public class GameMainController implements Initializable {
         gamePane.getChildren().add(obstacles);
 
         for (GameObj obj : obstaclesList) {
-            if (obj.getId() == 5 | obj.getId() == 6) {
+            if (obj.getId() == 5 | obj.getId() == 6 | obj.getId() == 7) {
                 ((Orcs)obj).jump(obstaclesList);
             }
         }

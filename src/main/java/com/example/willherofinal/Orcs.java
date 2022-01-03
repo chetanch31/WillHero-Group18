@@ -2,13 +2,16 @@ package com.example.willherofinal;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 public class Orcs extends GameObj{
     private ImageView orcImage;
@@ -28,6 +31,9 @@ public class Orcs extends GameObj{
         } else if (id == 6) {
             this.gravity = 0.3;
             this.max_jump = 8;
+        } else {
+            this.gravity = 0.7;
+            this.max_jump = 8;
         }
 
         x_speed = 2;
@@ -42,7 +48,12 @@ public class Orcs extends GameObj{
             orcImage.setImage(image);
             orcImage.setX(getX());
             orcImage.setY(getY());
-            orcImage.setFitHeight(40);
+
+            if (this.getId() == 7) {
+                orcImage.setFitHeight(80);
+            } else {
+                orcImage.setFitHeight(40);
+            }
             orcImage.setPreserveRatio(true);
         }
         return orcImage;
@@ -58,7 +69,13 @@ public class Orcs extends GameObj{
     }
 
     private void makeHeroPush(ArrayList<GameObj> gameObjs) {
+
         orcImage.setLayoutX(orcImage.getLayoutX() + x_speed);
+
+        if (orcImage.getBoundsInParent().getMinY() > 480) {
+            GameMainController.numberOfCoins += 5;
+            orcJumpingTimeline.pause();
+        }
     }
 
     public void jump(ArrayList<GameObj> gameObjs) {
@@ -114,4 +131,12 @@ class RedOrc extends Orcs {
     public RedOrc(int id, double x, double y, String imageAddr) {
         super(id, x, y, imageAddr);
     }
+}
+
+class BossOrc extends Orcs {
+
+    public BossOrc(int id, double x, double y, String imageAddr) {
+        super(id, x, y, imageAddr);
+    }
+
 }

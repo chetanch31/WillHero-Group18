@@ -85,7 +85,7 @@ public class Hero extends GameObj{
 
         if (heroImage.getBoundsInParent().getMinY() > 440 ) {
             heroJumpingTimeline.pause();
-            GameMainController.playGameOver();
+            //GameMainController.playGameOver();
         }
     }
 
@@ -99,13 +99,17 @@ public class Hero extends GameObj{
                         return true;
                     }
                 }
-            } else if (obj.getId() == 5 | obj.getId() == 6) {
+            } else if (obj.getId() == 5 | obj.getId() == 6 | obj.getId() == 7) {
                 //if hero collides with any orc
                 if (obj.getImage().getBoundsInParent().intersects(getImage().getBoundsInParent())) {
                     int collisionType = GameMainController.collisionType(getImage(), obj.getImage());
                     if ( collisionType == -1 ) {
-                        GameMainController.pushBack(gameObjs, 2);
-                        ((Orcs) obj).pushOrc(gameObjs);
+                        if (obj.getId() == 7) {
+                            GameMainController.pushBack(gameObjs, 1);
+                        } else {
+                            GameMainController.pushBack(gameObjs, 2);
+                        }
+                            ((Orcs) obj).pushOrc(gameObjs);
                         return false;
                     } else if ( collisionType == 0 ) {
                         GameMainController.playGameOver();
@@ -144,6 +148,12 @@ public class Hero extends GameObj{
                     ((TreasureChest)obj).updateImage();
                     knifeEquipped = false;
                     shurikenEquipped = true;
+                    return false;
+                }
+            } else if ( obj.getId() == 12 ) {
+                if (obj.getImage().getBoundsInParent().intersects(getImage().getBoundsInParent())) {
+                    ((Bomb)obj).explode(gameObjs);
+                    GameMainController.obstaclesList.remove(obj);
                     return false;
                 }
             }

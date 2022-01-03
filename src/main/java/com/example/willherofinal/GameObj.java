@@ -1,11 +1,16 @@
 package com.example.willherofinal;
 
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 abstract class GameObj {
     private int id;
@@ -114,5 +119,55 @@ class Tree extends GameObj {
         obj.setPreserveRatio(true);
 
         return obj;
+    }
+}
+
+class Bomb extends GameObj {
+    private ImageView bombImage;
+    private Timeline bombTimeline;
+
+    public Bomb(int id, double x, double y, String imageAddr) {
+        super(id, x, y, imageAddr);
+    }
+
+    @Override
+    public ImageView getImage() throws FileNotFoundException {
+        if (bombImage == null) {
+            FileInputStream inputStream = new FileInputStream(getImageAddr());
+            Image image = new Image(inputStream);
+            bombImage = new ImageView();
+            bombImage.setImage(image);
+            bombImage.setX(getX());
+            bombImage.setY(getY());
+            bombImage.setFitHeight(45);
+            bombImage.setPreserveRatio(true);
+        }
+        return bombImage;
+    }
+
+    public void explode(ArrayList<GameObj> obstacles) {
+        if (bombTimeline == null) {
+            bombTimeline = new Timeline(new KeyFrame(Duration.millis(1), e -> explosionAnimation()));
+        }
+
+        bombTimeline.setCycleCount(500);
+        bombTimeline.play();
+
+        bombTimeline.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                try {
+                    GameMainController.pushBack(obstacles,10);
+                    getImage().setLayoutY(500);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void explosionAnimation() {
+        bombImage.setLayoutX(bombImage.getLayoutX()+100);
+        bombImage.setLayoutX(bombImage.getLayoutX()-99.5);
     }
 }

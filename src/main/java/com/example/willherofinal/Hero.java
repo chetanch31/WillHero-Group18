@@ -85,7 +85,7 @@ public class Hero extends GameObj{
 
         if (heroImage.getBoundsInParent().getMinY() > 440 ) {
             heroJumpingTimeline.pause();
-            //GameMainController.playGameOver();
+            GameMainController.playGameOver();
         }
     }
 
